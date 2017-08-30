@@ -1,16 +1,27 @@
 {
-  "name": "app",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "name": "negociacoes",
+  "version": "0.1.5",
+  "description": "Demonstrations of some interesting features from ES6 by implementing a very simple SPA",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node index.js"
   },
-  "author": "",
+  "author": "RobHawk",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.1",
     "express": "^4.12.3"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RobHawk90/javascript-es6-examples"
+  },
+  "keywords": [
+    "node",
+    "es6",
+    "js",
+    "example"
+  ],
+  "license": "MIT"
 }

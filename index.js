@@ -1,6 +1,6 @@
-var http = require('http')
+let http = require('http')
   , app = require('./config/express')
 
-http.createServer(app).listen(3000, function() {
-    console.log('Servidor estutando na porta: ' + this.address().port)
-})
+let port = process.env.PORT || 3000
+
+http.createServer(app).listen(3000, () => console.log(`Server is running on port ${port}`))

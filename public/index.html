@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Negociações</title>
+
+	<link href="css/main.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="container teal">
+  <h1 class="center-align white-text">Negociações</h1>
+
+	<div class="card-panel">
+	  <form class="form row">
+	    <div class="input-field col s12 m6 l5">
+	    	<i class="material-icons prefix">date_range</i>
+	      <label for="data">Data</label>
+	      <input type="text" id="data" class="validate" required autofocus>
+	    </div>
+
+	    <div class="input-field col s12 m3 l2">
+	    	<i class="material-icons prefix">add</i>
+	      <label for="quantidade">Quantidade</label>
+	      <input type="number" min="1" step="1" id="quantidade" value="1" class="validate" required>
+	    </div>
+
+	    <div class="input-field col s12 m3 l2">
+	    	<i class="material-icons prefix">attach_money</i>
+	      <label for="valor">Valor</label>
+	      <input id="valor" type="number" min="0.01" step="0.01" value="0.0" class="validate" required>
+	    </div>
+
+	    <div class="col s12 l3 center-align">
+			  <button class="btn-large waves-effect green" type="submit">
+			  	<i class="material-icons left">add</i>
+			  	Incluir
+			  </button>
+	    </div>
+	  </form>
+
+		<div class="row">
+		  <div class="col s12 center-align">
+		    <button class="btn waves-effect blue" type="button">
+		    	<i class="material-icons left">cloud_download</i>
+		      Importar
+		    </button>
+
+		    <button class="btn waves-effect blue" type="button">
+		    	<i class="material-icons left">refresh</i>
+		      Apagar
+		    </button>
+		  </div> 
+		</div>
+	</div>
+  
+  <div class="card-panel">
+	  <table class="bordered highlight centered">
+	    <thead>
+	      <tr>
+	        <th>Data</th>
+	        <th>Qtde</th>
+	        <th>Valor</th>
+	        <th>Volume</th>
+	      </tr>
+	    </thead>
+	    
+	    <tbody>
+	    	<tr class="scale-transition">
+	    		<td>20/10/1990</td>
+	    		<td>3</td>
+	    		<td>6</td>
+	    		<td>18</td>
+	    	</tr>
+	    	<tr class="scale-transition">
+	    		<td>20/10/1990</td>
+	    		<td>3</td>
+	    		<td>6</td>
+	    		<td>18</td>
+	    	</tr>
+	    	<tr class="scale-transition">
+	    		<td>20/10/1990</td>
+	    		<td>3</td>
+	    		<td>6</td>
+	    		<td>18</td>
+	    	</tr>
+	    </tbody>
+	    
+	    <tfoot>
+	    </tfoot>
+	  </table>
+	</div>
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+</body>
+</html>

@@ -8,10 +8,10 @@
     "start": "node index.js"
   },
   "author": "RobHawk",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "body-parser": "^1.15.1",
-    "express": "^4.12.3"
+    "express": "^4.15.4"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,5 @@
     "es6",
     "js",
     "example"
-  ],
-  "license": "MIT"
+  ]
 }

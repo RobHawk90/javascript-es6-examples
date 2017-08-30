@@ -40,11 +40,11 @@ api.listTwoWeeksAgo = function(req, res) {
 
   let negociacoesRtrasadas = negociacoes.filter(negociacao => negociacao.data < lastWeek)
   res.json(negociacoesRtrasadas)
-    
+
 }
 
 api.save = function(req, res) {
-  
+
   console.log(req.body)
   req.body.data = new Date(req.body.data.replace(/-/g,'/'))
   negociacoes.push(req.body)

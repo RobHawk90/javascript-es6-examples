@@ -6,10 +6,11 @@ let express = require('express')
   , routes = require('../api/routes/negociacao')
   , path = require('path')
   , bodyParser = require('body-parser')
-  , consign = require('consign')
 
 /* setting some config */
-app.use(express.static('./public'))
+let publicPath = path.join(__dirname, '../', 'public')
+console.log(publicPath)
+app.use(express.static(publicPath))
 app.use(bodyParser.json())
 
 /* trying to solve CORS problem */

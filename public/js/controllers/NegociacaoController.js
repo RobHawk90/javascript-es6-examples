@@ -5,13 +5,14 @@ class NegociacaoController {
 		this._$data = $('#data')
 		this._$quantidade = $('#quantidade')
 		this._$valor = $('#valor')
+		this._listaNegociacoes = new ListaNegociacoes()
 	}
 
 	adiciona(event) {
 		event.preventDefault()
-		let negociacao = this._getNegociacao()
+		this._listaNegociacoes.adiciona(this._criaNegociacao())
 		this.limpaCampos()
-		console.log(negociacao)
+		console.log(this._listaNegociacoes.negociacoes)
 	}
 
 	limpaCampos() {
@@ -21,10 +22,9 @@ class NegociacaoController {
 		this._$data.focus()
 	}
 
-	_getNegociacao() {
+	_criaNegociacao() {
 		let dataStr = this._$data.value;
-		let formattedDataStr = dataStr.split('/').reverse().join('/')
-		let data = new Date(formattedDataStr)
+		let data = DateHelper.textoParaData(dataStr)
 		let quantidade = this._$quantidade.value
 		let valor = this._$valor.value
 		return new Negociacao(data, quantidade, valor)

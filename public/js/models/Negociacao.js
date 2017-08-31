@@ -3,10 +3,10 @@
 */
 class Negociacao {
 
-	construct(data, quantidade, valor) {
-		this._data = data.getTime()
-		this._quantidade = 1
-		this._valor = 1
+	constructor(data, quantidade, valor) {
+		this._data = new Date(data.getTime())
+		this._quantidade = quantidade
+		this._valor = valor
 		Object.freeze(this) // prevent instances properties modifications
 	}
 

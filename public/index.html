@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Negociações</title>
 
-	<link href="css/main.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
@@ -12,7 +11,7 @@
   <h1 class="center-align white-text">Negociações</h1>
 
 	<div class="card-panel">
-	  <form class="form row">
+	  <form class="form row" onsubmit="ctrl.adiciona(event)">
 	    <div class="input-field col s12 m6 l5">
 	    	<i class="material-icons prefix">date_range</i>
 	      <label for="data">Data</label>
@@ -94,5 +93,12 @@
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 
+	<!-- custom files, app files -->
+	<script src="js/models/Negociacao.js"></script>
+	<script src="js/controllers/NegociacaoController.js"></script>
+
+	<script>
+		let ctrl = new NegociacaoController()
+	</script>
 </body>
 </html>

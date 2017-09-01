@@ -1,15 +1,6 @@
-class NegociacoesView {
+class NegociacoesView extends View {
 
-	constructor($element) {
-		this._$element = $element
-		console.log($element)
-	}
-
-	update(model) {
-		this._$element.innerHTML = this._template(model)
-	}
-
-	_template(model) {
+	template(model) {
 		return `
 			<table class="bordered highlight centered">
 				<thead>
@@ -28,6 +19,10 @@ class NegociacoesView {
 						</tr>
 					`).join('')}
 				</tbody>
+				<tfoot>
+					<td colspan="3" class="right-align"><strong>Total: </strong></td>
+					<td class="center-align">${model.negociacoes.reduce((total, n) => total + n.volume, 0.0)}</td>
+				</tfoot>
 			</table>
 		`
 	}

@@ -2,20 +2,30 @@ class NegociacaoController {
 
 	constructor() {
 		let $ = document.querySelector.bind(document)
+
 		this._$data = $('#data')
 		this._$quantidade = $('#quantidade')
 		this._$valor = $('#valor')
 
 		this._listaNegociacoes = new ListaNegociacoes()
+		this._mensagem = new Mensagem()
 
-		this._$view = new NegociacoesView($('#negociacoes_view'))
-		this._$view.update(this._listaNegociacoes)
+		this._mensagemView = new MensagemView($('#mensagem_view'))
+		this._negociacoesView = new NegociacoesView($('#negociacoes_view'))
+
+		this._negociacoesView.update(this._listaNegociacoes)
+		this._mensagemView.update(this._mensagem)
 	}
 
 	adiciona(event) {
 		event.preventDefault()
+
 		this._listaNegociacoes.adiciona(this._criaNegociacao())
-		this._$view.update(this._listaNegociacoes)
+		this._mensagem.texto = 'Item incluido com sucesso!'
+
+		this._negociacoesView.update(this._listaNegociacoes)
+		this._mensagemView.update(this._mensagem)
+
 		this.limpaCampos()
 	}
 

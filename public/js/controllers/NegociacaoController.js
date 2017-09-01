@@ -5,14 +5,18 @@ class NegociacaoController {
 		this._$data = $('#data')
 		this._$quantidade = $('#quantidade')
 		this._$valor = $('#valor')
+
 		this._listaNegociacoes = new ListaNegociacoes()
+
+		this._$view = new NegociacoesView($('#negociacoes_view'))
+		this._$view.update(this._listaNegociacoes)
 	}
 
 	adiciona(event) {
 		event.preventDefault()
 		this._listaNegociacoes.adiciona(this._criaNegociacao())
+		this._$view.update(this._listaNegociacoes)
 		this.limpaCampos()
-		console.log(this._listaNegociacoes.negociacoes)
 	}
 
 	limpaCampos() {

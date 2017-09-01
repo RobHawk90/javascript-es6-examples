@@ -3,16 +3,18 @@ class DateHelper {
 
 	constructor() { throw new Error("DateHelper is static and can't be instanciated") }
 
-	static textoParaData(dataStr) {
-		let isValidDate = /\d{4}-\d{2}-\d{2}/.test(dataStr) // simple date regex validation
-		if(!isValidDate) throw new Error(`The date "${dataStr}" should be in "yyyy-mm-dd" format`)
-		let formattedDataStr = dataStr.split('-').reverse().join('/') // convert to ptBR format
-		return new Date(formattedDataStr)
+	static textoParaData(dateStr) {
+		if(dateStr && dateStr.indexOf('/') > -1) // probably in ptBR format
+			dateStr = dateStr.split('/').reverse().join('-') // converts to valid Date format convertion
+		if(/\d{4}-\d{2}-\d{2}/.test(dateStr)) // simple date regex validation
+			return new Date(dateStr)
+		throw new Error(`The date "${dateStr}" should be in "yyyy-mm-dd" format`)
 	}
 
 	static dataParaTexto(date) {
 		if(!date) return ''
-		return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+		let dateTime = date.toISOString().split('T')
+		return dateTime[0].split('-').reverse().join('/')
 	}
 
 }

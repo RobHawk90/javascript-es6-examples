@@ -7,14 +7,12 @@ class NegociacaoController {
 		this._$quantidade = $('#quantidade')
 		this._$valor = $('#valor')
 
-		this._listaNegociacoes = new ListaNegociacoes()
-		this._mensagem = new Mensagem()
-
 		this._mensagemView = new MensagemView($('#mensagem_view'))
 		this._negociacoesView = new NegociacoesView($('#negociacoes_view'))
 
-		this._negociacoesView.update(this._listaNegociacoes)
-		this._mensagemView.update(this._mensagem)
+		// implementing the Observer pattern
+		this._listaNegociacoes = new ListaNegociacoes(model => this._negociacoesView.update(model))
+		this._mensagem = new Mensagem(model => this._mensagemView.update(model))
 	}
 
 	adiciona(event) {
@@ -23,10 +21,12 @@ class NegociacaoController {
 		this._listaNegociacoes.adiciona(this._criaNegociacao())
 		this._mensagem.texto = 'Item incluido com sucesso!'
 
-		this._negociacoesView.update(this._listaNegociacoes)
-		this._mensagemView.update(this._mensagem)
-
 		this.limpaCampos()
+	}
+
+	apagaTudo() {
+		this._listaNegociacoes.esvazia()
+		this._mensagem.texto = 'Todos os itens foram apagados.'
 	}
 
 	limpaCampos() {

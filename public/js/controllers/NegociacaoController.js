@@ -11,8 +11,23 @@ class NegociacaoController {
 		this._negociacoesView = new NegociacoesView($('#negociacoes_view'))
 
 		// implementing the Observer pattern
-		this._listaNegociacoes = new ListaNegociacoes(model => this._negociacoesView.update(model))
 		this._mensagem = new Mensagem(model => this._mensagemView.update(model))
+
+		let self = this
+
+		this._listaNegociacoes = new Proxy(new ListaNegociacoes(), {
+			get: (target, prop, receiver) => {
+				if(prop in target && typeof(target[prop]) === typeof(Function)) {
+					return function() {
+						console.log(`${prop} foi interceptado.`)
+						Reflect.apply(target[prop], target, arguments) // arguments is auto injected in function() {}
+						self._negociacoesView.update(target)
+					}
+				}
+
+				return Reflect.get(target, prop, receiver)
+			}
+		})
 	}
 
 	adiciona(event) {

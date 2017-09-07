@@ -4,10 +4,10 @@ class NegociacoesView extends View {
 		return `
 			<table class="bordered highlight centered">
 				<thead>
-					<th>Data</th>
-					<th>Qtde</th>
-					<th>Valor</th>
-					<th>Volume</th>
+					<th onclick="ctrl.ordena('data')">Data</th>
+					<th onclick="ctrl.ordena('quantidade')">Qtde</th>
+					<th onclick="ctrl.ordena('valor')">Valor</th>
+					<th onclick="ctrl.ordena('volume')">Volume</th>
 				</thead>
 				<tbody>
 					${model.negociacoes.map(negociacao => `

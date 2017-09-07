@@ -12,7 +12,7 @@ class NegociacaoController {
 		this._listaNegociacoes = new Bind(
 			new ListaNegociacoes() // this model
 			, new NegociacoesView($('#negociacoes_view')) // updates this view
-			, 'adiciona', 'esvazia' // when this properties change
+			, 'adiciona', 'esvazia', 'ordena', 'inverteOrdem' // when this properties change
 		)
 
 		this._mensagem = new Bind(
@@ -20,6 +20,8 @@ class NegociacaoController {
 			, new MensagemView($('#mensagem_view'))
 			, 'texto'
 		)
+
+		this._ordenacao = '' // field of Negociacao order listaNegociacoes
 	}
 
 	adiciona(event) {
@@ -53,6 +55,15 @@ class NegociacaoController {
 			this._mensagem.texto = 'As negociações da semana foram importadas.';
 		})
 		.catch(error => this._mensagem.texto = error)
+	}
+
+	ordena(coluna) {
+		if(this._ordenacao === coluna)
+			this._listaNegociacoes.inverteOrdem()
+		else {
+			this._ordenacao = coluna
+			this._listaNegociacoes.ordena((a, b) => a[coluna] - b[coluna]);
+		}
 	}
 
 	_criaNegociacao() {

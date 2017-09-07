@@ -8,7 +8,7 @@ class NegociacaoController {
 		this._$valor = $('#valor')
 
 		/* there's no need to save views as attributes since
-		we are using one way data binding - models changes update views */
+		we are using one way data binding - model changes updates view */
 		this._listaNegociacoes = new Bind(
 			new ListaNegociacoes() // this model
 			, new NegociacoesView($('#negociacoes_view')) // updates this view
@@ -41,6 +41,21 @@ class NegociacaoController {
 		this._$quantidade.value = 1
 		this._$valor.value = 0
 		this._$data.focus()
+	}
+
+	importaNegociacoes() {
+		let service = new NegociacaoService()
+		service.importaSemana((err, negociacoes) => {
+			if(err) { // show errors and interrupt if exists
+				this._mensagem.texto = err
+				return
+			}
+
+			/* add all object result need to be refactored */
+			negociacoes.forEach(n => this._listaNegociacoes.adiciona(n))
+
+			this._mensagem.texto = 'As negociações da semana foram importadas.';
+		})
 	}
 
 	_criaNegociacao() {

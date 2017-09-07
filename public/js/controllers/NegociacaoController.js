@@ -45,17 +45,14 @@ class NegociacaoController {
 
 	importaNegociacoes() {
 		let service = new NegociacaoService()
-		service.importaSemana((err, negociacoes) => {
-			if(err) { // show errors and interrupt if exists
-				this._mensagem.texto = err
-				return
-			}
 
+		service.importaTodas()
+		.then(negociacoes => {
 			/* add all object result need to be refactored */
 			negociacoes.forEach(n => this._listaNegociacoes.adiciona(n))
-
 			this._mensagem.texto = 'As negociações da semana foram importadas.';
 		})
+		.catch(error => this._mensagem.texto = error)
 	}
 
 	_criaNegociacao() {

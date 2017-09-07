@@ -1,38 +1,66 @@
 /* request negociacoes data from server */
 class NegociacaoService {
 
-	constructor() {}
-
-	importaSemana(callback) {
-		this._get('/negociacoes/semana', callback)
+	constructor() {
+		this._http = new HttpService()
 	}
 
-	importaAnterior(callback) {
-		this._get('/negociacoes/anterior', callback)
+	importaSemana() {
+		/* encapsulates HttpService.get Promise to return list of Negociacao instance */
+		return new Promise((resolve, reject) => {
+			this._http.get('/negociacoes/semana')
+				.then(objects => {
+					let negociacoes = objects.map(obj => new Negociacao(new Date(obj.data), obj.quantidade, obj.valor))
+					resolve(negociacoes)
+				})
+				.catch(error => {
+					console.log(error)
+					reject("Não foi possível importar as negociações da semana")
+				})
+		})
 	}
 
-	importaRetrasada(callback) {
-		this._get('/negociacoes/retrasada', callback)
+	importaAnterior() {
+		return new Promise((resolve, reject) => {
+			this._http.get('/negociacoes/anterior')
+				.then(objects => {
+					let negociacoes = objects.map(obj => new Negociacao(new Date(obj.data), obj.quantidade, obj.valor))
+					resolve(negociacoes)
+				})
+				.catch(error => {
+					console.log(error)
+					reject("Não foi possível importar as negociações da semana")
+				})
+		})
 	}
 
-	/* send a get http request and callback result data */
-	_get(url, callback) {
-		let http = new XMLHttpRequest()
-		http.open('GET', url)
-		http.onreadystatechange = () => {
-			if(http.readyState == XMLHttpRequest.DONE) { // request is done
-				if(http.status == 200) { // status is ok
-					let res = JSON.parse(http.responseText) // should return json string
-					/* transform plain object to Negociacao */
-					let negociacoes = res.map(n => new Negociacao(new Date(n.data), n.quantidade, n.valor))
-					callback(false, negociacoes) // send error false and Negociacao object list
-				} else {
-					console.log(http.responseText)
-					callback("Não foi possível obter as negociações", false)
-				}
-			}
-		}
-		http.send()
+	importaRetrasada() {
+		return new Promise((resolve, reject) => {
+			this._http.get('/negociacoes/retrasada')
+				.then(objects => {
+					let negociacoes = objects.map(obj => new Negociacao(new Date(obj.data), obj.quantidade, obj.valor))
+					resolve(negociacoes)
+				})
+				.catch(error => {
+					console.log(error)
+					reject("Não foi possível importar as negociações da semana")
+				})
+		})
+	}
+
+	importaTodas() {
+		/* try to return all negociacoes from all services */
+		return new Promise((resolve, reject) => {
+			Promise.all([
+				this.importaSemana()
+				, this.importaAnterior()
+				, this.importaRetrasada()
+			]).then(results => { // the result of each promise
+				/* group all negociacao */
+				let negociacoes = results.reduce((allResult, thisResult) => allResult.concat(thisResult))
+				resolve(negociacoes)
+			}).catch(error => reject(error))
+		})
 	}
 
 }

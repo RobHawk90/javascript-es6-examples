@@ -1,7 +1,6 @@
 class Mensagem {
 
-	constructor(observer, texto = '') {
-		this._observer = observer
+	constructor(texto = '') {
 		this._texto = texto
 	}
 
@@ -11,7 +10,6 @@ class Mensagem {
 
 	set texto(texto) {
 		this._texto = texto
-		this._observer(this)
 	}
 
 }

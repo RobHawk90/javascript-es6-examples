@@ -7,27 +7,19 @@ class NegociacaoController {
 		this._$quantidade = $('#quantidade')
 		this._$valor = $('#valor')
 
-		this._mensagemView = new MensagemView($('#mensagem_view'))
-		this._negociacoesView = new NegociacoesView($('#negociacoes_view'))
+		/* there's no need to save views as attributes since
+		we are using one way data binding - models changes update views */
+		this._listaNegociacoes = new Bind(
+			new ListaNegociacoes() // this model
+			, new NegociacoesView($('#negociacoes_view')) // updates this view
+			, 'adiciona', 'esvazia' // when this properties change
+		)
 
-		// implementing the Observer pattern
-		this._mensagem = new Mensagem(model => this._mensagemView.update(model))
-
-		let self = this
-
-		this._listaNegociacoes = new Proxy(new ListaNegociacoes(), {
-			get: (target, prop, receiver) => {
-				if(prop in target && typeof(target[prop]) === typeof(Function)) {
-					return function() {
-						console.log(`${prop} foi interceptado.`)
-						Reflect.apply(target[prop], target, arguments) // arguments is auto injected in function() {}
-						self._negociacoesView.update(target)
-					}
-				}
-
-				return Reflect.get(target, prop, receiver)
-			}
-		})
+		this._mensagem = new Bind(
+			new Mensagem()
+			, new MensagemView($('#mensagem_view'))
+			, 'texto'
+		)
 	}
 
 	adiciona(event) {

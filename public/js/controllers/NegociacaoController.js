@@ -21,6 +21,7 @@ class NegociacaoController {
 			, 'texto'
 		)
 
+		this._service = new NegociacaoService()
 		this._ordenacao = '' // field of Negociacao order listaNegociacoes
 	}
 
@@ -46,9 +47,7 @@ class NegociacaoController {
 	}
 
 	importaNegociacoes() {
-		let service = new NegociacaoService()
-
-		service.importaTodas()
+		this._service.importaTodas()
 		.then(negociacoes => {
 			/* add all object result need to be refactored */
 			negociacoes.forEach(n => this._listaNegociacoes.adiciona(n))

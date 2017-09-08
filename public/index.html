@@ -63,6 +63,7 @@
 	</div>
 
 	<!-- custom files, app files -->
+	<script src="js/services/ConnectionFactory.js"></script>
 	<script src="js/services/ProxyFactory.js"></script>
 	<script src="js/services/HttpService.js"></script>
 	<script src="js/services/NegociacaoService.js"></script>
@@ -84,65 +85,48 @@
 		let ctrl = new NegociacaoController()
 
 		/* how to use indexedDB simplified example */
-		let connection;
-		let openRequest = window.indexedDB.open('exemplo', 3);
 
-		openRequest.onupgradeneeded = e => {
-			console.log('Updating "exemplo" indexedDB')
+		// function adiciona() {
+		// 	let transaction = connection.transaction(['negociacoes'], 'readwrite')
+		// 	let store = transaction.objectStore('negociacoes')
+		// 	let negociacao = new Negociacao(new Date(), 1, 1)
+		// 	let request = store.add(negociacao)
 
-			let db = e.target.result
+		// 	request.onsuccess = e => {
+		// 		console.log('negociacao added!')
+		// 	}
 
-			if(db.objectStoreNames.contains('negociacoes'))
-				db.deleteObjectStore('negociacoes')
+		// 	request.onerror = e => {
+		// 		console.log('error when adding negociacao')
+		// 	}
+		// }
 
-			db.createObjectStore('negociacoes', {autoIncrement: true})
-		}
+		// function listaTodos() {
+		// 	let transaction = connection.transaction(['negociacoes'], 'readwrite')
+		// 	let store = transaction.objectStore('negociacoes')
+		// 	let negociacoes = []
 
-		openRequest.onsuccess = e => {
-			connection = e.target.result
-			console.log('Connected "exemplo" indexedDB')
-		}
+		// 	let cursor = store.openCursor()
 
-		openRequest.onerror = e => {
-			console.log(e.target.error)
-		}
+		// 	cursor.onsuccess = e => {
+		// 		let current = e.target.result
 
-		function adiciona() {
-			let transaction = connection.transaction(['negociacoes'], 'readwrite')
-			let store = transaction.objectStore('negociacoes')
-			let negociacao = new Negociacao(new Date(), 1, 1)
-			let request = store.add(negociacao)
+		// 		if(current) {
+		// 			let dados = current.value
+		// 			negociacoes.push(new Negociacao(new Date(dados._data), dados._quantidade, dados._valor))
+		// 			current.continue()
+		// 		} else console.log(negociacoes)
+		// 	}
 
-			request.onsuccess = e => {
-				console.log('negociacao added!')
-			}
+		// 	cursor.onerror = e => {
+		// 		console.log(`indexedDB cursor error: ${e.target.error}`)
+		// 	}
+		// }
 
-			request.onerror = e => {
-				console.log('error when adding negociacao')
-			}
-		}
-
-		function listaTodos() {
-			let transaction = connection.transaction(['negociacoes'], 'readwrite')
-			let store = transaction.objectStore('negociacoes')
-			let negociacoes = []
-
-			let cursor = store.openCursor()
-
-			cursor.onsuccess = e => {
-				let current = e.target.result
-
-				if(current) {
-					let dados = current.value
-					negociacoes.push(new Negociacao(new Date(dados._data), dados._quantidade, dados._valor))
-					current.continue()
-				} else console.log(negociacoes)
-			}
-
-			cursor.onerror = e => {
-				console.log(`indexedDB cursor error: ${e.target.error}`)
-			}
-		}
+		/* indexedDB connection moved */
+		ConnectionFactory.getConnection()
+			.then(connection => console.log(connection))
+			.catch(err => console.log(err))
 	</script>
 </body>
 </html>

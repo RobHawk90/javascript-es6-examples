@@ -23,22 +23,42 @@ class NegociacaoController {
 
 		this._service = new NegociacaoService()
 		this._ordenacao = '' // field of Negociacao order listaNegociacoes
+
+		ConnectionFactory.getConnection()
+			.then(connection => new NegociacaoDAO(connection)) // handle getConnection promise
+			.then(dao => dao.listaTodas()) // handle NegociacaoDAO new instance
+			.then(negociacoes => this._listaNegociacoes.adicionaTodas(negociacoes)) // handle listaTodas promise
+			.catch(error => this._mensagem.texto = error) // if any promise fail, call this
 	}
 
 	adiciona(event) {
 		event.preventDefault()
 
-		this._listaNegociacoes.adiciona(this._criaNegociacao())
-		this._mensagem.texto = 'Item incluido com sucesso!'
+		let negociacao = this._criaNegociacao()
 
-		this.limpaCampos()
+		ConnectionFactory.getConnection()
+			.then(connection => new NegociacaoDAO(connection))
+			.then(dao => dao.adiciona(negociacao))
+			.then(() => {
+				this._listaNegociacoes.adiciona(negociacao)
+				this._mensagem.texto = 'Item incluido com sucesso!'
+				this.limpaCampos()
+			})
+			.catch(error => this._mensagem.texto = error)
 	}
 
 	apagaTudo() {
-		this._listaNegociacoes.esvazia()
-		this._mensagem.texto = 'Todos os itens foram apagados.'
+		ConnectionFactory.getConnection()
+			.then(connection => new NegociacaoDAO(connection))
+			.then(dao => dao.removeTodas())
+			.then(() => {
+				this._listaNegociacoes.esvazia()
+				this._mensagem.texto = 'Todos os itens foram apagados.'
+			})
+			.catch(error => this._mensagem.texto = error)
 	}
 
+	/* setting default values for each element */
 	limpaCampos() {
 		this._$data.value = ""
 		this._$quantidade.value = 1
@@ -65,6 +85,7 @@ class NegociacaoController {
 		}
 	}
 
+	/* retrieving form data */
 	_criaNegociacao() {
 		let dataStr = this._$data.value;
 		let data = DateHelper.textoParaData(dataStr)

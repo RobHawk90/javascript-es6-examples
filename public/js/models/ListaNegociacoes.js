@@ -8,6 +8,10 @@ class ListaNegociacoes {
 		this._negociacoes.push(negociacao)
 	}
 
+	adicionaTodas(negociacoes) {
+		negociacoes.forEach(n => this.adiciona(n))
+	}
+
 	esvazia() {
 		this._negociacoes = []
 	}

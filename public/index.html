@@ -71,6 +71,8 @@
 	<script src="js/helpers/Bind.js"></script>
 	<script src="js/helpers/DateHelper.js"></script>
 
+	<script src="js/daos/NegociacaoDAO.js"></script>
+
 	<script src="js/models/Mensagem.js"></script>
 	<script src="js/models/Negociacao.js"></script>
 	<script src="js/models/ListaNegociacoes.js"></script>
@@ -83,50 +85,6 @@
 
 	<script>
 		let ctrl = new NegociacaoController()
-
-		/* how to use indexedDB simplified example */
-
-		// function adiciona() {
-		// 	let transaction = connection.transaction(['negociacoes'], 'readwrite')
-		// 	let store = transaction.objectStore('negociacoes')
-		// 	let negociacao = new Negociacao(new Date(), 1, 1)
-		// 	let request = store.add(negociacao)
-
-		// 	request.onsuccess = e => {
-		// 		console.log('negociacao added!')
-		// 	}
-
-		// 	request.onerror = e => {
-		// 		console.log('error when adding negociacao')
-		// 	}
-		// }
-
-		// function listaTodos() {
-		// 	let transaction = connection.transaction(['negociacoes'], 'readwrite')
-		// 	let store = transaction.objectStore('negociacoes')
-		// 	let negociacoes = []
-
-		// 	let cursor = store.openCursor()
-
-		// 	cursor.onsuccess = e => {
-		// 		let current = e.target.result
-
-		// 		if(current) {
-		// 			let dados = current.value
-		// 			negociacoes.push(new Negociacao(new Date(dados._data), dados._quantidade, dados._valor))
-		// 			current.continue()
-		// 		} else console.log(negociacoes)
-		// 	}
-
-		// 	cursor.onerror = e => {
-		// 		console.log(`indexedDB cursor error: ${e.target.error}`)
-		// 	}
-		// }
-
-		/* indexedDB connection moved */
-		ConnectionFactory.getConnection()
-			.then(connection => console.log(connection))
-			.catch(err => console.log(err))
 	</script>
 </body>
 </html>

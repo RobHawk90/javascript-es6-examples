@@ -24,11 +24,13 @@ class NegociacaoController {
 		this._service = new NegociacaoService()
 		this._ordenacao = '' // field of Negociacao order listaNegociacoes
 
-		ConnectionFactory.getConnection()
-			.then(connection => new NegociacaoDAO(connection)) // handle getConnection promise
-			.then(dao => dao.listaTodas()) // handle NegociacaoDAO new instance
-			.then(negociacoes => this._listaNegociacoes.adicionaTodas(negociacoes)) // handle listaTodas promise
-			.catch(error => this._mensagem.texto = error) // if any promise fail, call this
+		this._init();
+	}
+
+	_init() {
+		this._service.listaCadastradas()
+			.then(negociacoes => this._listaNegociacoes.adicionaTodas(negociacoes))
+			.catch(error => this._mensagem.texto = error)
 	}
 
 	adiciona(event) {
@@ -36,24 +38,20 @@ class NegociacaoController {
 
 		let negociacao = this._criaNegociacao()
 
-		ConnectionFactory.getConnection()
-			.then(connection => new NegociacaoDAO(connection))
-			.then(dao => dao.adiciona(negociacao))
-			.then(() => {
+		this._service.cadastra(negociacao)
+			.then(mensagem => {
 				this._listaNegociacoes.adiciona(negociacao)
-				this._mensagem.texto = 'Item incluido com sucesso!'
+				this._mensagem.texto = mensagem
 				this.limpaCampos()
 			})
 			.catch(error => this._mensagem.texto = error)
 	}
 
 	apagaTudo() {
-		ConnectionFactory.getConnection()
-			.then(connection => new NegociacaoDAO(connection))
-			.then(dao => dao.removeTodas())
-			.then(() => {
+		this._service.apagaTodas()
+			.then(mensagem => {
 				this._listaNegociacoes.esvazia()
-				this._mensagem.texto = 'Todos os itens foram apagados.'
+				this._mensagem.texto = mensagem
 			})
 			.catch(error => this._mensagem.texto = error)
 	}
@@ -67,13 +65,12 @@ class NegociacaoController {
 	}
 
 	importaNegociacoes() {
-		this._service.importaTodas()
-		.then(negociacoes => {
-			/* add all object result need to be refactored */
-			negociacoes.forEach(n => this._listaNegociacoes.adiciona(n))
-			this._mensagem.texto = 'As negociações da semana foram importadas.';
-		})
-		.catch(error => this._mensagem.texto = error)
+		this._service.importa(this._listaNegociacoes.negociacoes)
+			.then(negociacoes => {
+				this._listaNegociacoes.adicionaTodas(negociacoes)
+				this._mensagem.texto = 'As negociações da semana foram importadas.';
+			})
+			.catch(error => this._mensagem.texto = error)
 	}
 
 	ordena(coluna) {

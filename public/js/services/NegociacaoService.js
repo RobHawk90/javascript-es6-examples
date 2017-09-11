@@ -63,4 +63,38 @@ class NegociacaoService {
 		})
 	}
 
+	importa(existentes) {
+		return this.importaTodas()
+			.then(negociacoes =>
+				negociacoes.filter(negociacao =>
+					!existentes.some(existente =>
+						existente.equals(negociacao)
+					)
+				)
+			)
+	}
+
+	cadastra(negociacao) {
+		return ConnectionFactory.getConnection()
+			.then(connection => new NegociacaoDAO(connection))
+			.then(dao => dao.adiciona(negociacao))
+			.then(() => 'Negociação adicionada com sucesso!')
+			.catch(error => { throw new Error('Não foi possível adicionar a negociação.') })
+	}
+
+	listaCadastradas() {
+		return ConnectionFactory.getConnection()
+			.then(connection => new NegociacaoDAO(connection))
+			.then(dao => dao.listaTodas())
+			.catch(error => { this._mensagem.texto = error })
+	}
+
+	apagaTodas() {
+		return ConnectionFactory.getConnection()
+			.then(connection => new NegociacaoDAO(connection))
+			.then(dao => dao.removeTodas())
+			.then(() => 'Todos as negociações foram apagadas!')
+			.catch(error => { throw new Error('Não foi possível apagar as negociações.') })
+	}
+
 }

@@ -1,35 +1,24 @@
 class HttpService {
 
 	get(url) {
-		return new Promise((resolve, reject) => {
-			let http = new XMLHttpRequest()
-			http.open('GET', url)
-			http.onreadystatechange = () => {
-				if(http.readyState === XMLHttpRequest.DONE) { // request is done
-					if(http.status === 200) // status is ok
-						resolve(JSON.parse(http.responseText))
-					else
-						reject(http.responseText)
-				}
-			}
-			http.send()
-		})
+		return fetch(url)
+			.then(res => this._handleErrors(res))
+			.then(res => res.json())
 	}
 
 	post(url, data) {
-		return new Promise((resolve, reject) => {
-			let http = new XMLHttpRequest()
-			http.open('POST', url)
-			http.setRequestHeader('Content-type', 'application/json')
-			http.onreadystatechange = () => {
-				if(http.readyState === XMLHttpRequest.DONE) {
-					console.log(http.responseText)
-					if(http.status === 200) resolve(JSON.parse(http.responseText))
-					else reject(http.responseText)
-				}
-			}
-			http.send(JSON.stringify(data)) // all data transfer requires string format
+		return fetch(url, {
+			headers: { 'Content-type': 'application/json' }
+			, method: 'post'
+			, body: JSON.stringify(data)
 		})
+			.then(res => this._handleErrors(res))
+	}
+
+	/* if response is not ok, force catch promise */
+	_handleErrors(res) {
+		if(!res.ok) throw new Error(res.statusText)
+		return res
 	}
 
 }

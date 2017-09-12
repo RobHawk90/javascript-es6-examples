@@ -1,6 +1,6 @@
 {
   "name": "negociacoes",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "Demonstrations of some interesting features from ES6 by implementing a very simple SPA",
   "main": "index.js",
   "scripts": {

@@ -1,11 +1,12 @@
 {
   "name": "negociacoes",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "description": "Demonstrations of some interesting features from ES6 by implementing a very simple SPA",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "babel public/js/app-es6 -d public/js/app --source-maps && node index.js",
+    "watch": "babel public/js/app-es6 -d public/js/app --source-maps --watch"
   },
   "author": "RobHawk",
   "license": "MIT",
@@ -22,5 +23,10 @@
     "es6",
     "js",
     "example"
-  ]
+  ],
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-es2017": "^6.9.0"
+  }
 }

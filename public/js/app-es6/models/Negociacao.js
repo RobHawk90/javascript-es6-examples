@@ -1,7 +1,7 @@
 /*
 	see more about classes: https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes
 */
-class Negociacao {
+export class Negociacao {
 
 	constructor(data, quantidade, valor) {
 		this._data = new Date(data.getTime())

@@ -1,4 +1,4 @@
-class View {
+export class View {
 
 	constructor($elemento) {
 		this._$elemento = $elemento

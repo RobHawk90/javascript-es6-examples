@@ -1,5 +1,5 @@
 /* this is a static class, an exception is thrown when creating a new instance  */
-class DateHelper {
+export class DateHelper {
 
 	constructor() { throw new Error("DateHelper is static and can't be instanciated") }
 

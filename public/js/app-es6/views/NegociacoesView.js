@@ -1,13 +1,16 @@
-class NegociacoesView extends View {
+import {View} from './View';
+import {DateHelper} from '../helpers/DateHelper';
+
+export class NegociacoesView extends View {
 
 	template(model) {
 		return `
 			<table class="bordered highlight centered">
 				<thead>
-					<th onclick="ctrl.ordena('data')">Data</th>
-					<th onclick="ctrl.ordena('quantidade')">Qtde</th>
-					<th onclick="ctrl.ordena('valor')">Valor</th>
-					<th onclick="ctrl.ordena('volume')">Volume</th>
+					<th>Data</th>
+					<th>Qtde</th>
+					<th>Valor</th>
+					<th>Volume</th>
 				</thead>
 				<tbody>
 					${model.negociacoes.map(negociacao => `

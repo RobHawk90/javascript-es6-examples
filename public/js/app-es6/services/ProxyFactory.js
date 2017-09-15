@@ -1,4 +1,4 @@
-class ProxyFactory {
+export class ProxyFactory {
 
 	constructor() { throw new Error("ProxyFactory is static and can't be instancied.") }
 

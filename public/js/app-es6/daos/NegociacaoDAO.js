@@ -1,5 +1,7 @@
+import {Negociacao} from '../models/Negociacao'
+
 /* abstracts all data manipulation from indexedDB store 'negociacoes' */
-class NegociacaoDAO {
+export class NegociacaoDAO {
 
 	constructor(connection) {
 		this._connection = connection

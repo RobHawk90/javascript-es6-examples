@@ -7,6 +7,7 @@
 <ul>
   <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions" target="_blank">Arrow functions</a></li>
   <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes" target="_blank">Classes</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API" target="_blank">Fetch API</a></li>
   <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Meta_programming" target="_blank">
     Meta programming
     <ul>
